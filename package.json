@@ -1,0 +1,15 @@
+{
+  "name": "cadloop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "CAD harness research workspace",
+  "scripts": {
+    "setup": "python3 scripts/bootstrap.py bootstrap",
+    "setup:dry-run": "python3 scripts/bootstrap.py bootstrap --dry-run",
+    "doctor": "python3 scripts/bootstrap.py doctor",
+    "check": "make check",
+    "provider:check": "python3 scripts/provider_check.py --protocol all --output runs/provider-check.json",
+    "cadbench:inspect": "make cadbench-inspect",
+    "cadbench:demo": "make cadbench-demo"
+  }
+}

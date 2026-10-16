@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "model": "gpt-5.6-sol",
+  "agents": {
+    "codex": {
+      "executable": "codex",
+      "protocol": "openai_responses",
+      "api_key_env": "OPENAI_API_KEY",
+      "base_url_env": "CADLOOP_BASE_URL",
+      "adapter": "scripts/run_agent_demo.py"
+    },
+    "claude-code": {
+      "executable": "claude",
+      "protocol": "anthropic_messages",
+      "api_key_env": "ANTHROPIC_API_KEY",
+      "base_url_env": "CADLOOP_CLAUDE_BASE_URL",
+      "adapter": "scripts/run_agent_demo.py"
+    },
+    "mini-swe-agent": {
+      "executable_candidates": ["mini", "mini-swe-agent"],
+      "protocol": "openai_chat_litellm",
+      "api_key_env": "OPENAI_API_KEY",
+      "base_url_env": "CADLOOP_BASE_URL",
+      "adapter": "scripts/run_agent_demo.py",
+      "python_requires": ">=3.10"
+    }
+  },
+  "notes": [
+    "This is an integration registry, not a claim that every agent is installed or benchmark-reproduced.",
+    "A shared URL is not assumed to support all three provider protocols.",
+    "Credentials are supplied through the child process environment only."
+  ]
+}

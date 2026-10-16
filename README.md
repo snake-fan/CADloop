@@ -13,7 +13,7 @@
 - 可运行的 Python harness 骨架：任务 / agent / backend / evaluator 接口，预算检查，逐题结果、轨迹和带校验值的运行记录。
 - 两个合成 box 任务、脚本 agent、mock 元数据 backend，以及离线测试和 GitHub Actions 配置。
 
-**目前可执行的是工程 smoke 自检。** 它不调用模型、不生成真实 CAD 几何，也不产生官方 benchmark 成绩。真实 CAD 后端、LLM provider、官方 benchmark adapter / scorer 和 SOTA 复现将在固定协议后逐项接入；候选清单不代表已验证的 SOTA 排名。
+**目前可执行的是工程 smoke 自检和 agent 接线 demo。** smoke 不调用模型、不生成真实 CAD 几何，也不产生官方 benchmark 成绩。Codex、Claude Code 和 mini-SWE-agent 已有统一适配入口；真实 provider 连通性、CAD 后端、官方 benchmark scorer 和 SOTA 复现仍需在固定协议后逐项验证。候选清单不代表已验证的 SOTA 排名。
 
 ## 快速开始
 
@@ -22,10 +22,27 @@
 在仓库根目录运行：
 
 ```bash
+make bootstrap
 make doctor
 make check
 make smoke
 ```
+
+`make bootstrap`（也可用 `npm run setup`）会创建被 Git 忽略的运行、缓存和
+上游 checkout 目录，并报告 Codex、Claude Code、mini-SWE-agent、Harbor、
+FreeCAD、uv 和 npm 的可用性。它不安装依赖、不下载 benchmark，也不读取或
+写入 API key。需要检查第三方 OpenAI-compatible provider 时，把 key 临时
+放在当前进程环境中。`make provider-check` 也会安全读取仓库根目录的
+`.env`；环境变量优先于 `.env`，任何 key 都只在当前进程中使用：
+
+```bash
+make provider-check
+```
+
+provider 检查默认请求 `https://us.ruiyumaas.com/v1` 的 `/models`、
+`/chat/completions` 和 `/responses`，报告不会保存 Authorization header 或
+完整响应。Claude Code 需要单独的 Anthropic Messages-compatible endpoint；
+OpenAI provider 检查通过不代表 Claude Code 协议可用。
 
 `make smoke` 默认写入新的 `runs/smoke-<UTC 时间>/`。也可以指定一个空目录，运行后核验产物：
 
@@ -52,6 +69,7 @@ CADloop/
 ├── docs/                        # 调研、研究计划、复现协议、架构和论文提纲
 ├── src/cadloop/                 # 公共接口、runner、CLI 与 mock smoke 实现
 ├── configs/
+│   ├── agents.json              # agent CLI 与 provider 协议 registry
 │   ├── benchmarks/             # benchmark 候选 registry
 │   ├── baselines/              # harness / 方法候选 registry
 │   └── experiments/            # 可执行实验配置
@@ -85,6 +103,7 @@ CADloop/
 | 现有框架复现 | [复现协议](docs/reproduction_protocol.md)、[上游记录](third_party/README.md) | 固定一个候选框架的 commit 和独立环境，跑通官方最小样例 |
 | 自研 harness | [架构](docs/architecture.md)、[实验模板](experiments/experiment.template.md) | 根据基线失败轨迹提出可证伪机制并设计消融 |
 | 论文 | [论文提纲](docs/paper_outline.md)、[论文源码](paper/main.tex) | 先写问题定义、协议和方法；结果由真实运行支撑 |
+| CAD Bench V3 demo | [加载与 demo 说明](docs/cadbench_v3.md)、[V3 registry](configs/benchmarks/cadbench_v3.json) | 先加载公开任务索引，再在不上传的前提下跑少量 agent demo |
 
 建议首个里程碑是：**选定一个 benchmark → 复现一个上游基线 → 在固定的小型开发子集上跑通真实 CAD 产物和官方评分 → 再冻结正式比较协议。** 原始论文协议复现与统一预算下的横向比较分别记录。
 

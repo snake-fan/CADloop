@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "id": "cadbench_v3",
+  "name": "Parametric CAD Bench V3",
+  "status": "source_verified_not_downloaded",
+  "source": {
+    "website": "https://cadbench.ai/",
+    "run_page": "https://cadbench.ai/cad-bench/benchmark",
+    "harbor_dataset": "gnucleus-ai/cad-bench@v3",
+    "harbor_url": "https://hub.harborframework.com/datasets/gnucleus-ai/cad-bench/v3",
+    "submission_repository": "https://github.com/gNucleus-AI/cad-bench-submission",
+    "validator_repository": "https://github.com/gNucleus-AI/freecad-validator",
+    "source_cad_dataset": "https://huggingface.co/datasets/gnucleus-ai/cad-gen-freecad"
+  },
+  "version": "3.0.0",
+  "dataset_digest": "sha256:8a786725d3648a76282fc5868df06da3d5e00d603f283573a53430803465d78a",
+  "task_count": 100,
+  "task_groups": {
+    "text_to_cad_creation": 30,
+    "text_to_cad_create_and_edit": 30,
+    "image_to_cad_engineering_drawings": 40
+  },
+  "environment": {
+    "harbor": "0.23.0",
+    "harbor_schema": "1.3",
+    "freecad": "1.1.0",
+    "validator": "gnucleus-freecad-validator 0.6.0",
+    "timeout_seconds_per_task": 9000
+  },
+  "scoring": {
+    "failed_or_unscored_reward": 0,
+    "official_submission_requires": "one complete public 100-task Harbor job, one attempt per task, retries disabled"
+  },
+  "local_status": {
+    "downloaded": false,
+    "official_scorer_integrated": false,
+    "leaderboard_submission": false,
+    "license_verified": false
+  },
+  "notes": [
+    "The benchmark task suite is distributed through Harbor Hub rather than as a standalone Git checkout.",
+    "This repository does not include held-out reference geometry or verifier data.",
+    "The public pages reviewed here did not establish a task/data license; verify Harbor or Hugging Face terms before redistribution.",
+    "Demo runs over synthetic prompts or a partial task subset are engineering checks, not official benchmark scores."
+  ]
+}
