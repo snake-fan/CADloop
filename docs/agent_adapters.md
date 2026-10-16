@@ -9,10 +9,13 @@ is always marked `official_benchmark: false` and `rankable: false`.
 
 ## One-command project preparation
 
-Run `make bootstrap` (or `npm run setup` when npm is available) to create the
-ignored run/cache directories and inspect local agent/tool availability. The
-preparation step does not install packages, download benchmark data, or consume
-API credentials. `make check` remains the required repository validation.
+Run `make prepare` to create the Python 3.12 `.venv` with `uv`, install the
+locked mini-SWE-agent and Harbor versions, inspect local agent/tool availability,
+and download the public CAD Bench V3 task index. The task index contains public
+IDs and revisions only; Harbor obtains task images when a benchmark run starts.
+No API credentials are read during setup. Use `make bootstrap` separately when
+you only need the ignored workspace directories. `make check` remains the
+required repository validation.
 
 Use `make provider-check` (or `npm run provider:check`) to probe the configured
 OpenAI-compatible endpoint. The checker reads process environment variables
@@ -39,11 +42,10 @@ prompts. The included examples are synthetic and do not belong to Harbor V3.
 
 ## Local CLI status
 
-The current machine has `codex-cli 0.162.1` and Claude Code `2.1.287`. The
-`mini` / `mini-swe-agent` executable is not installed. mini-SWE-agent 2.4.6
-requires Python 3.10 or newer; this repository's system Python is 3.9.6, so it
-needs a separate Python 3.10+ environment before installation. The adapter
-never installs it automatically.
+The project environment pins mini-SWE-agent `2.4.6` and Harbor `0.23.0` in
+`uv.lock`; mini-SWE-agent requires Python 3.10 or newer and Harbor 0.23.0
+requires Python 3.12. `make prepare` selects Python 3.12, while Codex CLI and
+Claude Code remain external user-installed executables.
 
 Codex runs in non-interactive JSONL mode:
 

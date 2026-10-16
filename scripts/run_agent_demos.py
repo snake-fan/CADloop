@@ -24,6 +24,7 @@ from cadbench import load_public_tasks
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TASKS = ROOT / "examples/cadbench_demo_tasks.jsonl"
 DEFAULT_ENV_FILE = ROOT / ".env"
+VENV_BIN = ROOT / ".venv" / "bin"
 
 
 def load_env_file(path: Path) -> Dict[str, str]:
@@ -148,6 +149,8 @@ def run_agent(agent: str, task: Dict[str, object], args: argparse.Namespace, out
         env.setdefault("ANTHROPIC_BASE_URL", args.claude_base_url.rstrip("/"))
     mini_model = args.model if "/" in args.model else "openai/{}".format(args.model)
     env["MSWEA_MODEL_NAME"] = mini_model
+    env.setdefault("MSWEA_GLOBAL_CONFIG_DIR", str(ROOT / "data" / "cache" / "mini-swe-agent"))
+    env.setdefault("MSWEA_SILENT_STARTUP", "1")
     task_dir = out_dir / agent / str(task["task_id"])
     task_dir.mkdir(parents=True, exist_ok=True)
     (task_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
@@ -155,7 +158,10 @@ def run_agent(agent: str, task: Dict[str, object], args: argparse.Namespace, out
     temporary_codex_home = None
     try:
         if agent == "mini-swe-agent":
-            executable = shutil.which("mini") or shutil.which("mini-swe-agent")
+            executable = next(
+                (str(candidate) for candidate in (VENV_BIN / "mini", VENV_BIN / "mini-swe-agent") if candidate.is_file()),
+                None,
+            ) or shutil.which("mini") or shutil.which("mini-swe-agent")
             if executable is None:
                 return {"status": "unavailable", "reason": "mini-swe-agent is not installed", "agent": agent, "task_id": task["task_id"]}
             command = [executable, "--task", prompt, "--model", mini_model, "--yolo", "--exit-immediately", "--output", str(task_dir / "trajectory.json")]

@@ -25,6 +25,7 @@ from typing import Any, Dict, Iterable, Iterator, List, Optional
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "configs/benchmarks/cadbench_v3.json"
 HARBOR_INDEX_URL = "https://hub.harborframework.com/api/datasets/gnucleus-ai/cad-bench/v3/tasks"
+PINNED_HARBOR = ROOT / ".venv" / "bin" / "harbor"
 PUBLIC_KEYS = ("prompt", "instruction", "task", "description", "input", "question")
 SENSITIVE_KEYS = {
     "answer", "answers", "expected", "evaluator", "evaluation", "ground_truth",
@@ -134,7 +135,7 @@ def load_public_tasks(source: Path, limit: Optional[int] = None) -> List[Dict[st
 
 
 def harbor_available() -> Optional[str]:
-    return shutil.which("harbor")
+    return str(PINNED_HARBOR) if PINNED_HARBOR.is_file() else shutil.which("harbor")
 
 
 def official_command(agent: str, model: str, upload: bool = False) -> List[str]:

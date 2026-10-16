@@ -17,7 +17,7 @@
 
 ## 快速开始
 
-需要 Python **3.9+** 和 `make`。离线自检没有第三方运行时依赖，不需要 API key、GPU 或下载数据。
+离线 harness 需要 Python **3.9+** 和 `make`；agent / Harbor 集成环境由 `uv` 使用 Python **3.12** 管理。
 
 在仓库根目录运行：
 
@@ -28,12 +28,29 @@ make check
 make smoke
 ```
 
+首次准备集成环境和公开 benchmark 索引时运行：
+
+```bash
+make prepare
+```
+
+这会根据 `pyproject.toml` 与 `uv.lock` 创建 `.venv`，安装固定的
+mini-SWE-agent `2.4.6` 与 Harbor `0.23.0`，检查 Codex、Claude Code、Harbor
+和 mini 的可用性，并下载 CAD Bench V3 的公开任务索引到
+`runs/cadbench-v3-index/tasks.jsonl`。索引不包含任务镜像、参考几何或
+evaluator 文件；这些文件由正式 Harbor 运行按固定数据集版本处理。
+
 `make bootstrap`（也可用 `npm run setup`）会创建被 Git 忽略的运行、缓存和
 上游 checkout 目录，并报告 Codex、Claude Code、mini-SWE-agent、Harbor、
 FreeCAD、uv 和 npm 的可用性。它不安装依赖、不下载 benchmark，也不读取或
 写入 API key。需要检查第三方 OpenAI-compatible provider 时，把 key 临时
 放在当前进程环境中。`make provider-check` 也会安全读取仓库根目录的
 `.env`；环境变量优先于 `.env`，任何 key 都只在当前进程中使用：
+
+`make uv-doctor` 会检查 `.venv` 中锁定的 agent / benchmark 版本；`make
+cadbench-run` 提供 V3 的本地 Harbor 运行入口，默认不上传结果。正式运行
+仍需模型 provider、FreeCAD 任务镜像和相应凭据，部分 demo 不能作为
+leaderboard 成绩。
 
 ```bash
 make provider-check

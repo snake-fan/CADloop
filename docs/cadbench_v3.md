@@ -19,6 +19,9 @@ sha256:8a786725d3648a76282fc5868df06da3d5e00d603f283573a53430803465d78a
 
 ## 加载公开任务索引
 
+用 `make prepare` 创建锁定的 `uv` 环境并下载完整 100 条公开任务索引。该
+步骤不取回任务镜像、参考几何或 evaluator 文件。
+
 这一步只读取任务 ID、版本和 revision 等公开元数据，不下载任务镜像，也不读取 `solution/`、`tests/grader/` 等 evaluator 文件：
 
 ```bash
@@ -37,7 +40,15 @@ PYTHONPATH=scripts python3 scripts/cadbench.py load \
   --output runs/cadbench-v3-demo/public_tasks.jsonl
 ```
 
-当前环境没有 Harbor CLI、FreeCAD 或完整 V3 task image，所以不会假装已经下载或评分。完整官方命令由脚本打印，但 demo 不应加上传参数：
+完整的本地运行入口是 `make cadbench-run`，默认使用 Codex 和 `gpt-5.6-sol`，
+按完整 100-task、单次尝试、零重试配置运行且不上传：
+
+```bash
+make cadbench-run HARBOR_AGENT=codex HARBOR_MODEL=gpt-5.6-sol
+```
+
+启动前仍要配置可用的模型 provider 和 Harbor 所需凭据，并准备 FreeCAD task
+image 运行条件。完整官方命令也可只打印、不执行：
 
 ```bash
 PYTHONPATH=scripts python3 scripts/cadbench.py command \
@@ -77,4 +88,6 @@ PYTHONPATH=scripts python3 scripts/run_agent_demo.py \
 
 结果会标记 `official_benchmark=false`、`rankable=false`。第三方网关必须分别兼容 Codex 的 OpenAI Responses API、mini-SWE-agent 使用的 LiteLLM/OpenAI 适配，以及 Claude Code 的 Anthropic Messages API；不能因为同一个 URL 能访问一个 CLI 就假设另外两个协议兼容。runner 不会读取、记录或写入 API key。
 
-当前机器的已知状态是：Codex CLI 和 Claude Code 已安装；mini-SWE-agent 未安装，且系统 Python 3.9 不满足其 2.4.6 的 Python >=3.10 要求。因此本地 demo 计划会把 mini 标为 unavailable，而不会伪造运行结果。
+当前机器的集成环境状态由 `make uv-doctor` 报告：项目 `.venv` 提供固定版
+mini-SWE-agent 与 Harbor，Codex CLI 和 Claude Code 是外部用户级 CLI。系统
+Python 3.9 只用于离线 smoke；不会用它启动需要 Python 3.10/3.12 的集成工具。

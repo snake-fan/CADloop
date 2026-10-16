@@ -26,5 +26,6 @@
 - 用中文解释研究决策；Python 标识符、论文正文和源码注释可使用英文。
 - 保持轻量 smoke 可用，不让 CAD 内核、GPU、API key 或大数据下载成为初始化测试依赖。
 - 在本仓库修改后运行 `make check`；涉及实验链路时再运行 `make smoke`。
+- Python 环境与外部工具使用 `uv` 管理：`make prepare` 会同步锁定依赖、检查 agent CLI 并下载 CAD Bench V3 的公开任务索引；任务镜像和 evaluator 文件由 Harbor 在正式运行时按固定数据集版本取得，不纳入 Git。
 - 不提交 API key、私有 prompt、大型数据、模型权重、上游 checkout 或未经审阅的运行目录。
 - 不自动替用户提交排行榜、发送消息或发布论文。

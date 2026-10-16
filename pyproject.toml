@@ -9,6 +9,25 @@ description = "Research scaffold for reproducible CAD harness experiments"
 requires-python = ">=3.9"
 dependencies = []
 
+[project.optional-dependencies]
+# The offline harness remains usable on Python 3.9.  The integration tools
+# are kept as explicit extras because Harbor 0.23 requires Python 3.12 and
+# mini-SWE-agent 2.4 requires Python 3.10.
+agents = [
+    "mini-swe-agent==2.4.6; python_version >= '3.10'",
+]
+benchmark = [
+    "harbor==0.23.0; python_version >= '3.12'",
+]
+
+[dependency-groups]
+dev = [
+    "setuptools>=61",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
 [project.scripts]
 cadloop = "cadloop.cli:main"
 
