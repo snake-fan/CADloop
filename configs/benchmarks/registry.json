@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-16",
+  "scope": "Initialization candidate catalog; not an integration manifest or SOTA ranking.",
+  "status_definitions": {
+    "source_verified": "Official source identity and stated scope were checked. This does not verify implementation behavior or reported performance.",
+    "not_integrated": "No official adapter / backend / scorer has been integrated in CADloop.",
+    "not_started": "No local reproduction or benchmark measurement has been performed."
+  },
+  "revision_policy": "reviewed_* fields record source metadata observed during initialization; reproduction_* fields remain null until a concrete reproduction protocol is fixed.",
+  "entries": [
+    {
+      "id": "cadgenbench",
+      "name": "CADGenBench",
+      "artifact_type": "benchmark",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P1",
+      "tasks": [
+        "drawing_to_cad_generation",
+        "instruction_based_cad_editing"
+      ],
+      "inputs": [
+        "engineering drawing and description",
+        "starting STEP and edit instruction"
+      ],
+      "outputs": [
+        "one output.step or output.stp per fixture"
+      ],
+      "official_repository": "https://github.com/huggingface/cadgenbench",
+      "paper_url": null,
+      "project_url": "https://huggingface.co/spaces/HuggingAI4Engineering/CADGenBench",
+      "dataset_url": "https://huggingface.co/datasets/HuggingAI4Engineering/cadgenbench-data",
+      "reviewed_upstream_commit": "33304cf771fc5639144b1df9611e347251052cf8",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": "f76f965585817c621d6ea0d150d745adf670e66e",
+      "reproduction_dataset_revision": null,
+      "code_license": "Apache-2.0",
+      "data_license": "ODC-BY (public inputs, per official dataset card)",
+      "metrics_to_verify": [
+        "CAD Score",
+        "validity",
+        "shape similarity",
+        "interface match",
+        "topology match"
+      ],
+      "limitations": [
+        "Reviewed dataset card declares 81 fixtures: 49 generation and 32 editing, with no train/test split; recheck counts at integration.",
+        "Ground truth is private according to the official README and dataset card. The unauthenticated ground-truth API returned HTTP 401; no ground truth was accessed.",
+        "Official leaderboard scoring requires external submission. Local public-input validity checks do not produce an official CAD Score.",
+        "Generation and editing use different score compositions; follow the fixed scorer revision rather than applying one formula to both.",
+        "Python 3.12+ is declared upstream; baseline rendering requires its native dependencies. No installation was attempted."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/huggingface/cadgenbench/blob/33304cf771fc5639144b1df9611e347251052cf8/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://huggingface.co/datasets/HuggingAI4Engineering/cadgenbench-data/blob/f76f965585817c621d6ea0d150d745adf670e66e/README.md",
+          "type": "official_dataset_card",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://github.com/huggingface/cadgenbench/blob/33304cf771fc5639144b1df9611e347251052cf8/docs/metrics.md",
+          "type": "official_metric_specification",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://github.com/huggingface/cadgenbench/blob/33304cf771fc5639144b1df9611e347251052cf8/docs/benchmark/submission.md",
+          "type": "official_submission_contract",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    },
+    {
+      "id": "cadbench",
+      "name": "CADBench: A Multimodal Benchmark for AI-Assisted CAD Program Generation",
+      "artifact_type": "benchmark",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P1",
+      "tasks": [
+        "image_to_cad_program",
+        "mesh_to_cad_program"
+      ],
+      "inputs": [
+        "single-view, multiview or PBR images",
+        "mesh or noisy mesh"
+      ],
+      "outputs": [
+        "CadQuery Python program in per-sample JSONL"
+      ],
+      "official_repository": "https://github.com/anniedoris/CADBench",
+      "paper_url": "https://arxiv.org/abs/2605.10873",
+      "project_url": "https://anniedoris.github.io/CADBench/",
+      "dataset_url": "https://huggingface.co/datasets/DeCoDELab/CADBench",
+      "reviewed_upstream_commit": "99e41a2eeb351f04611e83980f9f23cb0ca216c7",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": "7cf5b3ec195228e4342cfa534d25662d36e96cbc",
+      "reproduction_dataset_revision": null,
+      "code_license": null,
+      "data_license": "Mixed constituent licenses; see official DATASET_LICENSE.md",
+      "metrics_to_verify": [
+        "official run_eval_pipeline.py outputs; exact metric definitions and aggregation require code review"
+      ],
+      "limitations": [
+        "The name CADBench is ambiguous. This entry is explicitly the anniedoris / DeCoDELab paper benchmark, not other same-name repositories.",
+        "The reviewed README uses bench0 / bench0F / bench1-style subset names, while the reviewed Hugging Face metadata exposes benchB / benchF / benchE / benchA / benchM / benchO. Resolve and pin the official mapping before writing an adapter.",
+        "Data is derived from DeepCAD, Fusion 360 Gallery, ABC, MCB and Objaverse; constituent licenses and possible overlap must be tracked.",
+        "The README currently accepts CadQuery Python in generated fields and requires the final solid variable name for evaluation.",
+        "No dataset files, metric computation or leaderboard submission were run."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/anniedoris/CADBench/blob/99e41a2eeb351f04611e83980f9f23cb0ca216c7/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://arxiv.org/abs/2605.10873",
+          "type": "official_paper_metadata",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://huggingface.co/api/datasets/DeCoDELab/CADBench",
+          "type": "official_dataset_metadata",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://github.com/anniedoris/CADBench/blob/99e41a2eeb351f04611e83980f9f23cb0ca216c7/DATASET_LICENSE.md",
+          "type": "official_dataset_license_notice",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    },
+    {
+      "id": "sgp_bench",
+      "name": "SGP-Bench (CAD partitions)",
+      "artifact_type": "benchmark",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P2",
+      "tasks": [
+        "cad_program_understanding",
+        "cad_question_answering"
+      ],
+      "inputs": [
+        "symbolic CAD program and question; tool-rendered views only when allowed by the protocol"
+      ],
+      "outputs": [
+        "answer to benchmark question"
+      ],
+      "official_repository": "https://github.com/sgp-bench/sgp-bench",
+      "paper_url": "https://arxiv.org/abs/2408.08313",
+      "project_url": "https://sgp-bench.github.io/",
+      "dataset_url": "https://huggingface.co/datasets/sgp-bench/sgp-bench",
+      "reviewed_upstream_commit": "e7906399beebb82ab5dcc4aa547eaec8674c9144",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": null,
+      "reproduction_dataset_revision": null,
+      "code_license": "MIT",
+      "data_license": null,
+      "metrics_to_verify": [
+        "official answer grading and CAD partition aggregation; verify before integration"
+      ],
+      "limitations": [
+        "This measures CAD program understanding and question answering, not CAD generation quality or STEP geometry reconstruction.",
+        "Official SGP-Bench evaluation and CAD-Assistant tool-augmented evaluation must be reported as separate protocols.",
+        "CAD-Assistant supplies preprocessed 700 2D and 1000 3D FreeCAD samples; verify correspondence to official SGP-Bench splits before comparison.",
+        "Code license is declared MIT in the reviewed README; dataset licensing and dataset revision have not yet been checked."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/sgp-bench/sgp-bench/blob/e7906399beebb82ab5dcc4aa547eaec8674c9144/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    },
+    {
+      "id": "deepcad",
+      "name": "DeepCAD data and evaluation protocol",
+      "artifact_type": "dataset_and_evaluation_protocol",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P2",
+      "tasks": [
+        "cad_sequence_autoencoding",
+        "unconditional_cad_generation"
+      ],
+      "inputs": [
+        "Onshape-derived CAD construction sequences in JSON / vectorized H5"
+      ],
+      "outputs": [
+        "CAD construction sequence; STEP can be exported"
+      ],
+      "official_repository": "https://github.com/rundiwu/DeepCAD",
+      "paper_url": "https://arxiv.org/abs/2105.09492",
+      "project_url": null,
+      "dataset_url": "http://www.cs.columbia.edu/cg/deepcad/data.tar",
+      "reviewed_upstream_commit": "f7b350790a3bce0267a5345339fd09be0250c8cb",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": null,
+      "reproduction_dataset_revision": null,
+      "code_license": null,
+      "data_license": null,
+      "metrics_to_verify": [
+        "command accuracy",
+        "parameter accuracy",
+        "Chamfer distance",
+        "invalid ratio",
+        "COV",
+        "MMD",
+        "JSD"
+      ],
+      "limitations": [
+        "DeepCAD names both a learned generative model and its released CAD sequence dataset; neither is an agent harness.",
+        "The original README evaluates autoencoding and random generation. Point-cloud-to-CAD or text-to-CAD tests on derived data use other methods and protocols.",
+        "Dataset revision, train/test file checksums, duplication policy and data license must be verified before download or comparison.",
+        "The reviewed environment targets Linux, Python 3.7, PyTorch 1.5+ and pythonocc-core 7.5.1; reproduce in an isolated upstream environment.",
+        "Derived DeepCAD subsets may overlap with CADBench and Text2CAD; their scores are not independent evidence without an overlap analysis."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/rundiwu/DeepCAD/blob/f7b350790a3bce0267a5345339fd09be0250c8cb/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    },
+    {
+      "id": "text2cad",
+      "name": "Text2CAD annotations and evaluation data",
+      "artifact_type": "dataset_and_evaluation_protocol",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P2",
+      "tasks": [
+        "text_to_sequential_cad"
+      ],
+      "inputs": [
+        "beginner-to-expert text annotations paired with DeepCAD-derived geometry"
+      ],
+      "outputs": [
+        "sequential CAD representation; evaluate with upstream Evaluation/eval_seq.py"
+      ],
+      "official_repository": "https://github.com/SadilKhan/Text2CAD",
+      "paper_url": "https://arxiv.org/abs/2409.17106",
+      "project_url": "https://sadilkhan.github.io/text2cad-project/",
+      "dataset_url": "https://huggingface.co/datasets/SadilKhan/Text2CAD",
+      "reviewed_upstream_commit": "669a81472ede2269837c22a4d00070eaac360c82",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": "422d4c93198c3cd98d5c2092c0ab214b3a76a68d",
+      "reproduction_dataset_revision": null,
+      "code_license": null,
+      "data_license": "CC-BY-NC-SA-4.0 (per official Hugging Face metadata)",
+      "metrics_to_verify": [
+        "upstream sequential CAD evaluation; exact metrics and split version require review"
+      ],
+      "limitations": [
+        "Text2CAD includes a learned generation model as well as text annotations and data preparation code. It is not an agent harness.",
+        "The dataset exposes v1.0 and v1.1 assets. The chosen version, split and checkpoint must be fixed explicitly before experiments.",
+        "The reviewed Hugging Face metadata declares automatic gating and CC BY-NC-SA 4.0. Access may require accepting the dataset terms; no gated files were downloaded.",
+        "Derived from DeepCAD; preserve the official deduplication / split protocol and analyze overlap with other benchmarks.",
+        "The reviewed README targets Linux with Python 3.9+ and a conda environment; no environment or checkpoint was installed."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/SadilKhan/Text2CAD/blob/669a81472ede2269837c22a4d00070eaac360c82/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        },
+        {
+          "url": "https://huggingface.co/api/datasets/SadilKhan/Text2CAD",
+          "type": "official_dataset_metadata",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    }
+  ]
+}

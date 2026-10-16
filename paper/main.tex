@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{CADloop: A Research Scaffold for Parametric CAD Agent Harnesses}
+\author{Authors to be determined}
+\date{Draft -- no experimental claims}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document is a writing scaffold for a planned study of agent harnesses
+for parametric three-dimensional CAD construction and editing. The research
+scope, method, benchmarks, and evaluation protocol remain to be finalized.
+No real CAD benchmark results or state-of-the-art claims are reported here.
+\end{abstract}
+
+\section{Introduction}
+\textbf{TODO:} Motivate the specific modeling or editing problem. Distinguish
+executable geometry, satisfaction of design constraints, and editability.
+Write contributions only after their supporting experiments are complete.
+
+\section{Related Work}
+\textbf{TODO:} Separate CAD generation and representation methods, datasets
+and benchmarks, general agent harnesses, and domain-specific CAD agents.
+DeepCAD provides a starting point for CAD sequence literature
+\cite{wu2021deepcad}; Fusion 360 Gallery provides human design sequences and
+a programmatic reconstruction setting \cite{willis2021fusion}.
+These sources are candidates for protocol study, rather than evidence of
+completed harness reproductions.
+
+\section{Problem Setup}
+\textbf{TODO:} Define task inputs, initial CAD state, actions, permitted
+observations, artifact format, units, tolerances, budgets, and termination.
+Keep evaluator-only ground truth unavailable to the agent.
+
+\section{Method}
+\textbf{TODO:} Describe the implemented harness and its state, feedback,
+verification, and recovery rules. Account for the cost of each component.
+
+\section{Experimental Setup}
+\textbf{TODO:} Freeze source commits, CAD kernel, model versions, tools,
+prompts, data manifests, splits, budgets, seeds, and evaluator versions.
+Label official reproductions, CAD adaptations, and local protocols clearly.
+
+\section{Results}
+\textbf{TODO:} Add audited results from real CAD experiments, including
+sample counts, all failure outcomes, uncertainty, and cost curves. Keep
+different task protocols in separate comparisons. Mock smoke outputs must
+not be inserted as paper results.
+
+\section{Ablations and Failure Analysis}
+\textbf{TODO:} Test each actual component with the same model and budget.
+Report negative results and representative failures from frozen task sets.
+
+\section{Limitations}
+\textbf{TODO:} State supported CAD representations and operations,
+dataset and license constraints, potential contamination, numerical
+tolerances, provider nondeterminism, and limits on generalization.
+
+\section{Conclusion}
+\textbf{TODO:} Summarize only claims supported by completed experiments.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\appendix
+\section{Reproducibility Materials}
+\textbf{TODO:} Include prompts, tool schemas, environment details, complete
+hyperparameters, failure definitions, and trace-to-table provenance.
+
+\end{document}

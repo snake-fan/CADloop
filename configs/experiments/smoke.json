@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "experiment_id": "offline_metadata_smoke",
+  "seed": 0,
+  "benchmark": {
+    "name": "synthetic_boxes_v1",
+    "tasks_path": "../../examples/smoke_tasks.jsonl"
+  },
+  "agent": {"name": "scripted_smoke"},
+  "backend": {"name": "mock_metadata"},
+  "budget": {"max_steps": 2, "timeout_seconds": 10}
+}

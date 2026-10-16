@@ -1,0 +1,29 @@
+name: Offline smoke and tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check source and tests
+        run: make check
+      - name: Run synthetic smoke pipeline
+        run: make smoke SMOKE_OUTPUT=runs/ci-smoke
+      - name: Save smoke artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-python-${{ matrix.python-version }}
+          path: runs/ci-smoke/

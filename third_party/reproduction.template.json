@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "method": "TODO",
+  "status": "candidate",
+  "source_url": null,
+  "paper_url": null,
+  "upstream_commit": null,
+  "upstream_license": null,
+  "environment": {
+    "python": null,
+    "cad_kernel": null,
+    "hardware": null,
+    "dependency_lock_path": null
+  },
+  "data": {
+    "benchmark": null,
+    "version_or_checksum": null,
+    "split": null,
+    "scorer_commit": null
+  },
+  "install_command": null,
+  "official_eval_command": null,
+  "paper_reported_metric": null,
+  "local_measured_metric": null,
+  "run_manifest": null,
+  "protocol_deviations": [],
+  "notes": "Template only. Null fields do not represent a completed reproduction."
+}

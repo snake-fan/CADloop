@@ -1,0 +1,2 @@
+{"task_id":"box_unit","instruction":"Create a box with the public dimensions in millimeters, then inspect it.","public_input":{"dimensions":{"length":1,"width":1,"height":1},"units":"mm"},"evaluation":{"expected_dimensions":{"length":1,"width":1,"height":1}}}
+{"task_id":"box_rectangular","instruction":"Create a box with the public dimensions in millimeters, then inspect it.","public_input":{"dimensions":{"length":10,"width":20,"height":5},"units":"mm"},"evaluation":{"expected_dimensions":{"length":10,"width":20,"height":5}}}

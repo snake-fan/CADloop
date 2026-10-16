@@ -1,0 +1,49 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Credentials and editor state
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+
+# Downloaded datasets, upstream checkouts, and generated runs
+/data/raw/
+/data/processed/
+/data/cache/
+/third_party/checkouts/
+/runs/
+/artifacts/
+/results/local/
+*.step
+*.stp
+*.stl
+*.brep
+*.FCStd
+*.pt
+*.pth
+*.safetensors
+
+# LaTeX build products; figures and curated results may be committed explicitly
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+paper/*.toc
+paper/*.pdf

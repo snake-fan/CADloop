@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-16",
+  "scope": "Initialization candidate catalog; not an integration manifest or SOTA ranking.",
+  "status_definitions": {
+    "source_verified": "Official source identity and stated scope were checked. This does not verify implementation behavior or reported performance.",
+    "not_integrated": "No official adapter / backend / scorer has been integrated in CADloop.",
+    "not_started": "No local reproduction or benchmark measurement has been performed."
+  },
+  "revision_policy": "reviewed_* fields record source metadata observed during initialization; reproduction_* fields remain null until a concrete reproduction protocol is fixed.",
+  "entries": [
+    {
+      "id": "cad_assistant",
+      "name": "CAD-Assistant",
+      "artifact_type": "agent_harness",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P1",
+      "tasks": [
+        "cad_question_answering",
+        "tool_augmented_cad_task_solving"
+      ],
+      "inputs": [
+        "text queries, sketches, drawn commands or 3D scans, depending on task"
+      ],
+      "outputs": [
+        "FreeCAD code, tool observations and final task answer / artifact"
+      ],
+      "official_repository": "https://github.com/dimitrismallis/CAD-Assistant",
+      "paper_url": "https://arxiv.org/abs/2412.13810",
+      "project_url": "https://cadassistant.github.io/",
+      "dataset_url": null,
+      "reviewed_upstream_commit": "5fea47309b2db5245f9e01c7a2445cce9dd2d07e",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": null,
+      "reproduction_dataset_revision": null,
+      "code_license": "Attribution-NonCommercial (README wording; exact license to inspect)",
+      "data_license": null,
+      "metrics_to_verify": [
+        "original SGP-Bench 2D / 3D evaluation as supplied upstream"
+      ],
+      "limitations": [
+        "Official README describes a tool-augmented VLLM framework integrated with FreeCAD, sketch_recognizer and solid_recognizer.",
+        "The released evaluation targets CAD question answering on SGP-Bench; applying the framework to CADGenBench generation/editing would be an adaptation, not an exact paper reproduction.",
+        "Docker, FreeCAD, Python OCC and model API access are required upstream.",
+        "The README declares an Attribution-NonCommercial license; inspect the exact LICENSE before redistribution or reuse.",
+        "No environment was built, API was called or paper score reproduced."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/dimitrismallis/CAD-Assistant/blob/5fea47309b2db5245f9e01c7a2445cce9dd2d07e/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    },
+    {
+      "id": "cadgenbench_reference",
+      "name": "CADGenBench reference iterative baseline",
+      "artifact_type": "agent_harness",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P1",
+      "tasks": [
+        "drawing_to_cad_generation",
+        "instruction_based_cad_editing"
+      ],
+      "inputs": [
+        "public CADGenBench fixture inputs"
+      ],
+      "outputs": [
+        "build123d or CadQuery Python and final output.step"
+      ],
+      "official_repository": "https://github.com/huggingface/cadgenbench",
+      "paper_url": null,
+      "project_url": "https://huggingface.co/spaces/HuggingAI4Engineering/CADGenBench",
+      "dataset_url": "https://huggingface.co/datasets/HuggingAI4Engineering/cadgenbench-data",
+      "reviewed_upstream_commit": "33304cf771fc5639144b1df9611e347251052cf8",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": "f76f965585817c621d6ea0d150d745adf670e66e",
+      "reproduction_dataset_revision": null,
+      "code_license": "Apache-2.0",
+      "data_license": "ODC-BY (public inputs)",
+      "metrics_to_verify": [
+        "official CADGenBench leaderboard scoring after submission"
+      ],
+      "limitations": [
+        "This is the official repository reference baseline, not a claim of paper SOTA.",
+        "The README describes iterative code generation, execution, rendered feedback and repair until valid. Freeze prompts, model identifier, backend and iteration / token budgets for comparison.",
+        "The baseline generates artifacts only; public-input validity checks cannot replace private-ground-truth leaderboard scoring.",
+        "Model API calls and official submission have not been attempted."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/huggingface/cadgenbench/blob/33304cf771fc5639144b1df9611e347251052cf8/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    },
+    {
+      "id": "cad_recode",
+      "name": "CAD-Recode",
+      "artifact_type": "learned_generation_model",
+      "source_status": "source_verified",
+      "integration_status": "not_integrated",
+      "reproduction_status": "not_started",
+      "verified_on": "2026-10-16",
+      "priority": "P2",
+      "tasks": [
+        "point_cloud_to_cad_code"
+      ],
+      "inputs": [
+        "3D point cloud"
+      ],
+      "outputs": [
+        "CadQuery Python program and reconstructed 3D solid"
+      ],
+      "official_repository": "https://github.com/filaPro/cad-recode",
+      "paper_url": "https://arxiv.org/abs/2412.14042",
+      "project_url": "https://cad-recode.github.io/",
+      "dataset_url": "https://huggingface.co/datasets/filapro/cad-recode",
+      "reviewed_upstream_commit": "03e3262119b38939feaa44b8368ad8db99243d47",
+      "reproduction_commit": null,
+      "reviewed_dataset_revision": null,
+      "reproduction_dataset_revision": null,
+      "code_license": null,
+      "data_license": null,
+      "metrics_to_verify": [
+        "upstream reconstruction protocols on DeepCAD, Fusion 360 Gallery and CC3D; protocol reproduction requires further code review"
+      ],
+      "limitations": [
+        "This is a trained point-cloud-to-code reconstruction model, not an agent harness.",
+        "The repository links v1, v1.5 and Cadrille assets; fix an explicit model / checkpoint revision before running.",
+        "The README reports a historical December 2024 SOTA claim. This catalog makes no current ranking claim.",
+        "Comparing against drawing/text-only agents requires a separate point-cloud track or a justified identical input protocol.",
+        "Only the official README and repository HEAD were inspected; no weights, dataset or inference demo were downloaded or executed."
+      ],
+      "source_evidence": [
+        {
+          "url": "https://github.com/filaPro/cad-recode/blob/03e3262119b38939feaa44b8368ad8db99243d47/README.md",
+          "type": "official_readme",
+          "verified_on": "2026-10-16"
+        }
+      ],
+      "local_measured_metrics": null,
+      "run_manifest": null
+    }
+  ]
+}
